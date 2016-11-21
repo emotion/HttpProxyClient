@@ -1,13 +1,11 @@
 package com.github.emotion.http.proxy;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -16,24 +14,20 @@ import java.net.URISyntaxException;
  * Created by emotion on 19/11/2016.
  */
 public class HttpProxyClientTest {
-    HttpProxyClient httpProxyClient = HttpProxyClients.create().withTargetUri(new URI("https://www.baidu.com/")).build();
-    @Mock
-    HttpServletRequest httpServletRequest;
-    @Mock
-    HttpServletResponse httpServletResponse;
+    HttpProxyClient httpProxyClient = HttpProxyClients.create().withTargetUri(new URI("http://www.baidu.com/")).build();
 
     public HttpProxyClientTest() throws URISyntaxException {
     }
 
-    @Before
-    public void before(){
-        MockitoAnnotations.initMocks(this);
-        Mockito.when(httpServletRequest.getMethod()).thenReturn("GET");
-        Mockito.when(httpServletRequest.getRequestURI()).thenReturn("/");
-
-    }
     @Test
     public void test() throws Exception {
+        HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+        HttpServletResponse httpServletResponse = Mockito.mock(HttpServletResponse.class);
+        Mockito.when(httpServletRequest.getMethod()).thenReturn("GET");
+        Mockito.when(httpServletRequest.getRequestURI()).thenReturn("/");
+        PrintWriter printWriter = new PrintWriter(System.out);
+        Mockito.when(httpServletResponse.getWriter()).thenReturn(printWriter);
         httpProxyClient.process(httpServletRequest, httpServletResponse);
+        printWriter.flush();
     }
 }

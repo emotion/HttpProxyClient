@@ -11,7 +11,6 @@ import org.apache.http.HttpResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
@@ -115,12 +114,8 @@ public class DefaultHttpProxyResponseInterpreter implements HttpProxyResponseInt
     private void copyResponseEntity(HttpResponse proxyResponse, HttpServletResponse servletResponse, HttpServletRequest servletRequest) throws IOException {
         HttpEntity entity = proxyResponse.getEntity();
         if (entity != null) {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             OutputStream servletOutputStream = servletResponse.getOutputStream();
-            entity.writeTo(byteArrayOutputStream);
-            System.out.println(byteArrayOutputStream.toString("utf-8"));
-            byteArrayOutputStream.writeTo(servletOutputStream);
-//            IOUtils.copyLarge(entity.getContent(), servletResponse.getOutputStream());
+            entity.writeTo(servletOutputStream);
         }
     }
 
