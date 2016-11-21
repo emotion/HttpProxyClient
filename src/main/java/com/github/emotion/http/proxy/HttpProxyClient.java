@@ -22,11 +22,8 @@ public final class HttpProxyClient {
     private HttpProxyResponseInterpreter httpProxyResponseInterpreter;
     private ExceptionHandler             exceptionHandler;
 
-    public HttpProxyClient(URI targetURI, HttpClient httpClient, HttpProxyRequestInterpreter httpProxyRequestInterpreter
+    HttpProxyClient(URI targetURI, HttpClient httpClient, HttpProxyRequestInterpreter httpProxyRequestInterpreter
             , HttpProxyResponseInterpreter httpProxyResponseInterpreter, ExceptionHandler exceptionHandler) {
-        if (targetURI == null) {
-            throw new IllegalArgumentException("targetURI must be non null");
-        }
         this.targetURI = new HttpProxyURI(targetURI);
         this.httpClient = httpClient;
         this.httpProxyRequestInterpreter = httpProxyRequestInterpreter;
@@ -38,7 +35,7 @@ public final class HttpProxyClient {
         HttpResponse httpResponse = null;
         HttpUriRequest httpUriRequest = null;
         try {
-            httpUriRequest = httpProxyRequestInterpreter.build(httpServletRequest, targetURI);
+            httpUriRequest = httpProxyRequestInterpreter.interpret(httpServletRequest, targetURI);
             if (httpUriRequest == null) {
                 httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
             }

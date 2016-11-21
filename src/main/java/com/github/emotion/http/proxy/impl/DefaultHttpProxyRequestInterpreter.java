@@ -90,7 +90,7 @@ public class DefaultHttpProxyRequestInterpreter implements HttpProxyRequestInter
         this.doForwardIP = doForwardIP;
     }
 
-    public HttpUriRequest build(HttpServletRequest httpServletRequest, HttpProxyURI targetURI) throws IOException {
+    public HttpUriRequest interpret(HttpServletRequest httpServletRequest, HttpProxyURI targetURI) throws IOException {
         // Make the Request
         //note: we won't transfer the protocol version because I'm not sure it would truly be compatible
         String method = httpServletRequest.getMethod();
