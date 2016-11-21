@@ -1,4 +1,4 @@
-package com.github.emotion.httpProxy;
+package com.github.emotion.http.proxy;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,37 +15,37 @@ import java.net.URI;
 /**
  * Created by emotion on 18/11/2016.
  */
-public class HttpProxyClient {
-    private HttpURI                 targetURI;
-    private HttpClient              httpClient;
-    private HttpUriRequestBuilder   httpUriRequestBuilder;
-    private HttpResponseInterceptor httpResponseInterceptor;
-    private ExceptionSolver         exceptionSolver;
+public final class HttpProxyClient {
+    private HttpProxyURI                 targetURI;
+    private HttpClient                   httpClient;
+    private HttpProxyRequestInterpreter  httpProxyRequestInterpreter;
+    private HttpProxyResponseInterpreter httpProxyResponseInterpreter;
+    private ExceptionHandler             exceptionHandler;
 
-    public HttpProxyClient(URI targetURI, HttpClient httpClient, HttpUriRequestBuilder httpUriRequestBuilder
-            , HttpResponseInterceptor httpResponseInterceptor, ExceptionSolver exceptionSolver) {
+    public HttpProxyClient(URI targetURI, HttpClient httpClient, HttpProxyRequestInterpreter httpProxyRequestInterpreter
+            , HttpProxyResponseInterpreter httpProxyResponseInterpreter, ExceptionHandler exceptionHandler) {
         if (targetURI == null) {
             throw new IllegalArgumentException("targetURI must be non null");
         }
-        this.targetURI = new HttpURI(targetURI);
+        this.targetURI = new HttpProxyURI(targetURI);
         this.httpClient = httpClient;
-        this.httpUriRequestBuilder = httpUriRequestBuilder;
-        this.httpResponseInterceptor = httpResponseInterceptor;
-        this.exceptionSolver = exceptionSolver;
+        this.httpProxyRequestInterpreter = httpProxyRequestInterpreter;
+        this.httpProxyResponseInterpreter = httpProxyResponseInterpreter;
+        this.exceptionHandler = exceptionHandler;
     }
 
     public void process(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
         HttpResponse httpResponse = null;
         HttpUriRequest httpUriRequest = null;
         try {
-            httpUriRequest = httpUriRequestBuilder.interpret(httpServletRequest, targetURI);
+            httpUriRequest = httpProxyRequestInterpreter.build(httpServletRequest, targetURI);
             if (httpUriRequest == null) {
                 httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
             httpResponse = httpClient.execute(httpUriRequest);
-            httpResponseInterceptor.interpret(httpServletRequest, httpServletResponse, httpResponse, targetURI);
+            httpProxyResponseInterpreter.interpret(httpServletRequest, httpServletResponse, httpResponse, targetURI);
         } catch (Exception e) {
-            exceptionSolver.solve(e, httpServletRequest, httpServletResponse, httpUriRequest, httpResponse, targetURI);
+            exceptionHandler.handle(e, httpServletRequest, httpServletResponse, httpUriRequest, httpResponse, targetURI);
         } finally {
             if (httpResponse != null) {
                 consumeQuietly(httpResponse.getEntity());

@@ -1,4 +1,4 @@
-package com.github.emotion.httpProxy.impl;
+package com.github.emotion.http.proxy.impl;
 
 import org.apache.http.ConnectionReuseStrategy;
 import org.apache.http.HttpHost;

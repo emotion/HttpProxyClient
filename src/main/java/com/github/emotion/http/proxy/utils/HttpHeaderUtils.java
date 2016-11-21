@@ -1,4 +1,4 @@
-package com.github.emotion.httpProxy.utils;
+package com.github.emotion.http.proxy.utils;
 
 /**
  * Created by emotion on 19/11/2016.
