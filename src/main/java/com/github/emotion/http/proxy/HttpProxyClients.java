@@ -21,7 +21,7 @@ public final class HttpProxyClients {
     private HttpProxyClients() {
     }
 
-    public static HttpProxyClients create() {
+    public static HttpProxyClients custom() {
         return new HttpProxyClients();
     }
 

@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
  * Created by emotion on 19/11/2016.
  */
 public class HttpProxyClientTest {
-    HttpProxyClient httpProxyClient = HttpProxyClients.create().withTargetUri(new URI("http://www.baidu.com/")).build();
+    HttpProxyClient httpProxyClient = HttpProxyClients.custom().withTargetUri(new URI("http://www.baidu.com/")).build();
 
     public HttpProxyClientTest() throws URISyntaxException {
     }

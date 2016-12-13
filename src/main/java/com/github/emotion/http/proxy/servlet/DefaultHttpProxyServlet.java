@@ -12,7 +12,7 @@ import java.io.IOException;
  * Created by emotion on 19/11/2016.
  */
 public class DefaultHttpProxyServlet implements Servlet {
-    private HttpProxyClient httpProxyClient = HttpProxyClients.create().build();
+    private HttpProxyClient httpProxyClient = HttpProxyClients.custom().build();
 
     public void init(ServletConfig servletConfig) throws ServletException {
 
