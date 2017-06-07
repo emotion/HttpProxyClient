@@ -1,7 +1,8 @@
-package com.github.emotion.http.proxy.utils;
+package com.github.emotion.httpproxy.utils;
 
 /**
- * Created by emotion on 19/11/2016.
+ * @author emotion
+ * @date 19/11/2016
  */
 public class HttpHeaderUtils {
     /**

@@ -1,15 +1,16 @@
-package com.github.emotion.http.proxy;
+package com.github.emotion.httpproxy;
 
 import org.apache.http.HttpHost;
 
 import java.net.URI;
 
 /**
- * Created by emotion on 19/11/2016.
+ * @author emotion
+ * @date 19/11/2016
  */
 public class HttpProxyURI {
-    private String   httpURIString;
-    private URI      httpURIObj;
+    private String httpURIString;
+    private URI httpURIObj;
     private HttpHost httpHost;
 
     public HttpProxyURI(URI uri) {

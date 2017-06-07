@@ -1,8 +1,8 @@
-package com.github.emotion.http.proxy.impl;
+package com.github.emotion.httpproxy.handler.impl;
 
-import com.github.emotion.http.proxy.HttpProxyResponseInterpreter;
-import com.github.emotion.http.proxy.HttpProxyURI;
-import com.github.emotion.http.proxy.utils.HttpHeaderUtils;
+import com.github.emotion.httpproxy.handler.HttpProxyResponseHandler;
+import com.github.emotion.httpproxy.HttpProxyURI;
+import com.github.emotion.httpproxy.utils.HttpHeaderUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -17,9 +17,10 @@ import java.net.HttpCookie;
 import java.util.List;
 
 /**
- * Created by emotion on 19/11/2016.
+ * @author emotion
+ * @date 19/11/2016
  */
-public class DefaultHttpProxyResponseInterpreter implements HttpProxyResponseInterpreter {
+public class DefaultHttpProxyResponseHandler implements HttpProxyResponseHandler {
 
     public void interpret(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpResponse httpResponse, HttpProxyURI targetUri) throws IOException {
         // Process the response:

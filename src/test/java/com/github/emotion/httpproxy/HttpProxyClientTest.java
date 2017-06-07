@@ -1,4 +1,4 @@
-package com.github.emotion.http.proxy;
+package com.github.emotion.httpproxy;
 
 import org.junit.Test;
 import org.mockito.Mockito;

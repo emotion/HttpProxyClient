@@ -1,4 +1,4 @@
-package com.github.emotion.http.proxy.impl;
+package com.github.emotion.httpproxy;
 
 import org.apache.http.ConnectionReuseStrategy;
 import org.apache.http.HttpHost;
@@ -20,7 +20,8 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * Created by emotion on 19/11/2016.
+ * @author emotion
+ * @date 19/11/2016
  */
 public class DefaultHttpClient implements HttpClient, Closeable {
     private CloseableHttpClient closeableHttpClient;

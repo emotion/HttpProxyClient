@@ -1,5 +1,8 @@
-package com.github.emotion.http.proxy;
+package com.github.emotion.httpproxy;
 
+import com.github.emotion.httpproxy.handler.ExceptionHandler;
+import com.github.emotion.httpproxy.handler.HttpProxyRequestHandler;
+import com.github.emotion.httpproxy.handler.HttpProxyResponseHandler;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,21 +16,22 @@ import java.io.IOException;
 import java.net.URI;
 
 /**
- * Created by emotion on 18/11/2016.
+ * @author emotion
+ * @date 18/11/2016
  */
 public final class HttpProxyClient {
-    private HttpProxyURI                 targetURI;
-    private HttpClient                   httpClient;
-    private HttpProxyRequestInterpreter  httpProxyRequestInterpreter;
-    private HttpProxyResponseInterpreter httpProxyResponseInterpreter;
-    private ExceptionHandler             exceptionHandler;
+    private HttpProxyURI targetURI;
+    private HttpClient httpClient;
+    private HttpProxyRequestHandler httpProxyRequestHandler;
+    private HttpProxyResponseHandler httpProxyResponseHandler;
+    private ExceptionHandler exceptionHandler;
 
-    HttpProxyClient(URI targetURI, HttpClient httpClient, HttpProxyRequestInterpreter httpProxyRequestInterpreter
-            , HttpProxyResponseInterpreter httpProxyResponseInterpreter, ExceptionHandler exceptionHandler) {
+    HttpProxyClient(URI targetURI, HttpClient httpClient, HttpProxyRequestHandler httpProxyRequestHandler
+            , HttpProxyResponseHandler httpProxyResponseHandler, ExceptionHandler exceptionHandler) {
         this.targetURI = new HttpProxyURI(targetURI);
         this.httpClient = httpClient;
-        this.httpProxyRequestInterpreter = httpProxyRequestInterpreter;
-        this.httpProxyResponseInterpreter = httpProxyResponseInterpreter;
+        this.httpProxyRequestHandler = httpProxyRequestHandler;
+        this.httpProxyResponseHandler = httpProxyResponseHandler;
         this.exceptionHandler = exceptionHandler;
     }
 
@@ -35,12 +39,12 @@ public final class HttpProxyClient {
         HttpResponse httpResponse = null;
         HttpUriRequest httpUriRequest = null;
         try {
-            httpUriRequest = httpProxyRequestInterpreter.interpret(httpServletRequest, targetURI);
+            httpUriRequest = httpProxyRequestHandler.interpret(httpServletRequest, targetURI);
             if (httpUriRequest == null) {
                 httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
             httpResponse = httpClient.execute(httpUriRequest);
-            httpProxyResponseInterpreter.interpret(httpServletRequest, httpServletResponse, httpResponse, targetURI);
+            httpProxyResponseHandler.interpret(httpServletRequest, httpServletResponse, httpResponse, targetURI);
         } catch (Exception e) {
             exceptionHandler.handle(e, httpServletRequest, httpServletResponse, httpUriRequest, httpResponse, targetURI);
         } finally {

@@ -1,8 +1,8 @@
-package com.github.emotion.http.proxy.impl;
+package com.github.emotion.httpproxy.handler.impl;
 
-import com.github.emotion.http.proxy.HttpProxyRequestInterpreter;
-import com.github.emotion.http.proxy.HttpProxyURI;
-import com.github.emotion.http.proxy.utils.HttpHeaderUtils;
+import com.github.emotion.httpproxy.handler.HttpProxyRequestHandler;
+import com.github.emotion.httpproxy.HttpProxyURI;
+import com.github.emotion.httpproxy.utils.HttpHeaderUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -18,9 +18,10 @@ import java.net.URI;
 import java.util.*;
 
 /**
- * Created by emotion on 19/11/2016.
+ * @author emotion
+ * @date 19/11/2016
  */
-public class DefaultHttpProxyRequestInterpreter implements HttpProxyRequestInterpreter {
+public class DefaultHttpProxyRequestHandler implements HttpProxyRequestHandler {
     private static final BitSet asciiQueryChars;
 
     static {
